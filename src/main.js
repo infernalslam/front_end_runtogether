@@ -12,6 +12,7 @@ import Runmatch from './components/runmatch'
 import Dismatch from './components/dismatch'
 import Matching from './components/matching'
 import Check from './components/check'
+import Dragmatch from './components/dragmatch'
 import Error from './components/error'
 import '../node_modules/semantic-ui/dist/semantic.min.css'
 import 'semantic'
@@ -46,6 +47,9 @@ router.map({
   },
   '/matching': {
     component: Matching
+  },
+  '/dragmatch': {
+    component: Dragmatch
   },
   '/check': {
     component: Check

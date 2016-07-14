@@ -21,10 +21,6 @@
     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
     <div class="ui icon input">
       <input class="prompt" type="text" placeholder="Search ...">
       <i class="search icon"></i>
@@ -212,5 +208,8 @@ export default {
 }
 .ui.input input {
     margin: -7px;
+}
+.ui.icon.input input {
+    padding-right: 8.671429em!important;
 }
 </style>

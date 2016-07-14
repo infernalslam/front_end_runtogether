@@ -5,6 +5,7 @@
     <button class="ui green  button" v-link="{path:'/dismatch'}">หาคู่(คนพิการ)</button>
     <button class="ui blue  button" v-link="{path:'/runmatch'}">หาคู่(อาสาสมัคร)</button>
     <button class="ui violet  button" v-link="{path:'/matching'}">จับคู่(match)</button>
+    <button class="ui brown  button" v-link="{path:'/dragmatch'}">ลากจับคู่</button>
   </div>
 </div>
 </template>
