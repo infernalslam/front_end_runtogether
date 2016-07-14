@@ -128,7 +128,7 @@ export default {
   },
   computed: {},
   ready: function () {
-    this.$http.get('http://192.168.100.113:10000/event').then(function (res) {
+    this.$http.get('http://192.168.1.38:10000/event').then(function (res) {
       this.data = res.data
     })
     this.setPage(3)
@@ -136,14 +136,14 @@ export default {
   attached: function () {},
   methods: {
     add: function (input) {
-      console.log('show obj' + require('../testdata/disabled.js'))
-      var setData = require('../testdata/members.js')
+      // console.log('show obj' + require('../testdata/disabled.js'))
+      // var setData = require('../testdata/members.js')
       // console.log(setData[0])
-      for (var i = 0; i <= setData.length; i++) {
-        this.$http.post('http://192.168.100.113:10000/members', setData[i]).then(function (res) {
-          console.log('count:' + i)
-        })
-      }
+      // for (var i = 0; i <= setData.length; i++) {
+      //   this.$http.post('http://192.168.100.113:10000/members', setData[i]).then(function (res) {
+      //     console.log('count:' + i)
+      //   })
+      // }
     }
   },
   components: {

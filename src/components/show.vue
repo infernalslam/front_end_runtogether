@@ -1,11 +1,9 @@
 <template lang="html">
   <br><br><br>
   <div class="ui category search  segment heads">
-    <button class="ui  blue button">(คนพิการ)</button>
-    <button class="ui  black button">(อาสาสมัคร)</button>
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    <button class="ui  blue button" @click="disabled()">(คนพิการ)</button>
+    <button class="ui  black button" @click="normal()">(อาสาสมัคร)</button>
+    <button class="ui  green button" @click="defaultShow()">(ทั้งหมด)</button>
     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -34,6 +32,35 @@
     <div class="results"></div>
   </div>
 
+<div v-show="activePage1 === true">
+    <table class="ui blue fixed single line table" class="scroll">
+      <thead>
+        <tr>
+          <th><center>ชื่อ</th>
+          <th><center>นามสกุล</th>
+          <th><center>เพศ</th>
+          <th><center>เบอร์</th>
+          <th><center>อายุ</th>
+          <th><center>สถานะ</th>
+          <th><center>แก้ไข</th>
+        </tr>
+      </thead>
+      <tbody v-for="show in data">
+        <tr>
+        <td><center>{{show.mem_name}}</td>
+        <td><center>{{show.mem_surname}}</td>
+        <td><center>{{gender(show.mem_gender)}}</td>
+        <td><center>{{show.mem_tel}}</td>
+        <td><center>{{show.mem_age}}</th>
+        <td><center>{{show.mem_email}}</td>
+        <td><center><i class="trash outline icon" v-on:click="del(show.mem_id, $index)"></i></td>
+      </tr></tbody>
+  </table>
+</div>
+
+
+
+<div v-show="activePage2 === true">
   <table class="ui blue fixed single line table" class="scroll">
     <thead>
       <tr>
@@ -46,7 +73,7 @@
         <th><center>แก้ไข</th>
       </tr>
     </thead>
-    <tbody v-for="show in data">
+    <tbody v-for="show in datadis">
       <tr>
       <td><center>{{show.mem_name}}</td>
       <td><center>{{show.mem_surname}}</td>
@@ -57,6 +84,36 @@
       <td><center><i class="trash outline icon" v-on:click="del(show.mem_id, $index)"></i></td>
     </tr></tbody>
 </table>
+</div>
+
+
+
+
+<div v-show="activePage3 === true">
+  <table class="ui blue fixed single line table" class="scroll">
+    <thead>
+      <tr>
+        <th><center>ชื่อ</th>
+        <th><center>นามสกุล</th>
+        <th><center>เพศ</th>
+        <th><center>เบอร์</th>
+        <th><center>อายุ</th>
+        <th><center>สถานะ</th>
+        <th><center>แก้ไข</th>
+      </tr>
+    </thead>
+    <tbody v-for="show in datanor">
+      <tr>
+      <td><center>{{show.mem_name}}</td>
+      <td><center>{{show.mem_surname}}</td>
+      <td><center>{{gender(show.mem_gender)}}</td>
+      <td><center>{{show.mem_tel}}</td>
+      <td><center>{{show.mem_age}}</th>
+      <td><center>{{show.mem_email}}</td>
+      <td><center><i class="trash outline icon" v-on:click="del(show.mem_id, $index)"></i></td>
+    </tr></tbody>
+</table>
+<div>
 </template>
 
 <script>
@@ -71,14 +128,27 @@ export default {
   },
   data: function () {
     return {
-      data: []
+      data: [],
+      activePage1: true,
+      activePage2: false,
+      activePage3: false,
+      datadis: [],
+      datanor: []
     }
   },
   computed: {},
   ready: function () {
-    this.$http.get('http://192.168.100.113:10000/members').then(function (res) {
+    this.$http.get('http://192.168.1.38:10000/members').then(function (res) {
       console.log(res.data)
       this.data = res.data
+    })
+    this.$http.get('http://192.168.1.38:10000/members/disabled').then(function (res) {
+      console.log(res.data)
+      this.datadis = res.data
+    })
+    this.$http.get('http://192.168.1.38:10000/members/normal').then(function (res) {
+      console.log(res.data)
+      this.datanor = res.data
     })
     this.setPage(2)
   },
@@ -86,13 +156,13 @@ export default {
   methods: {
     del: function (id, index) {
       console.log(id, index)
-      this.$http.delete('http://192.168.100.113:10000/members/' + id).then(function (res) {
+      this.$http.delete('http://192.168.1.38:10000/members/' + id).then(function (res) {
         console.log(res)
         this.get()
       })
     },
     get: function () {
-      this.$http.get('http://192.168.100.113:10000/members').then(function (res) {
+      this.$http.get('http://192.168.1.38:10000/members').then(function (res) {
         console.log(res)
         this.data = res.data
       })
@@ -101,6 +171,23 @@ export default {
       if (data === 'm') {
         return 'ชาย'
       } else return 'หญิง'
+    },
+    normal: function () {
+      console.log('page3')
+      this.activePage1 = false
+      this.activePage2 = false
+      this.activePage3 = true
+    },
+    disabled: function () {
+      console.log('page2')
+      this.activePage1 = false
+      this.activePage2 = true
+      this.activePage3 = false
+    },
+    defaultShow: function () {
+      this.activePage1 = true
+      this.activePage2 = false
+      this.activePage3 = false
     }
   },
   components: {}
@@ -122,5 +209,8 @@ export default {
     width: 100px;
     height: 100px;
     overflow: scroll;
+}
+.ui.input input {
+    margin: -7px;
 }
 </style>

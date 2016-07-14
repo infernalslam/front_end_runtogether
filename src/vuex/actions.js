@@ -7,3 +7,7 @@
 export const stateAction = function ({ dispatch, state }, page) {
   dispatch('statePage', page)
 }
+// api connection
+export const getApi = function ({ dispatch, state }) {
+  dispatch('getStatePage')
+}

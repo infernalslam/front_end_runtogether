@@ -11,6 +11,10 @@ const state = {
   count: 1
 }
 
+const backend = {
+  get: []
+}
+
 // Create an object storing various mutations. We will write the mutation
 const mutations = {
   // TODO: set up our mutations
@@ -19,10 +23,17 @@ const mutations = {
     console.log(page)
   }
 }
+// const mutations = {
+//   getStatePage (backend) {
+//     // backend.get
+//     console.log(backend.get)
+//   }
+// }
 
 // Combine the initial state and the mutations to create a Vuex store.
 // This store can be linked to our app.
 export default new Vuex.Store({
   state,
+  backend,
   mutations
 })
