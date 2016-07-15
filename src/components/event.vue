@@ -24,6 +24,7 @@
         <th><center>Detail</th>
         <th><center>Edit</th>
         <th><center>Delete</th>
+        <th><center>ดูข้อมูล</center></th>
       </tr>
       </thead>
       <tbody class="silde ui">
@@ -35,6 +36,7 @@
             <td><center><i class="zoom icon" @click="detail($index)"></i></td>
             <td><center><i class="edit icon" @click="updateEvent($index)"></i></td>
             <td><center><i class="remove icon" @click="delEvent(show.event_id)"></i></td>
+            <td><center><i class="list layout icon" @click="showEvent(show.event_id)"></i></td>
         </tr>
       </tbody>
     </table>
@@ -170,6 +172,14 @@
      </form>
 </div>
 
+
+<div class="ui basic modal load">
+  <div class="ui teal progress" id="example2">
+    <div class="bar"></div>
+    <div class="label">loading {{percent.count}} ...%</div>
+  </div>
+</div>
+
 </template>
 <script>
 /*globals $:false */
@@ -189,12 +199,13 @@ export default {
       activePage1: true,
       activePage2: false,
       dataDetail: {},
-      dataEdit: {}
+      dataEdit: {},
+      percent: {}
     }
   },
   computed: {},
   ready: function () {
-    this.$http.get('http://192.168.1.38:10000/event').then(function (res) {
+    this.$http.get('http://192.168.100.113:10000/event').then(function (res) {
       console.log(res)
       this.data = res.data
     })
@@ -252,6 +263,30 @@ export default {
       console.log(this.data[index])
       this.dataDetail = this.data[index]
       $('.ui.modal.2').modal('show')
+      // this.$route.router.go({path: '/dragmatch'})
+    },
+    showEvent: function (eventID) {
+      console.log(eventID)
+      var percent = 0
+      this.percent = {
+        count: 0
+      }
+      $('.ui.basic.modal.load').modal('show')
+      var loading = setInterval(() => {
+        percent += 20
+        this.percent = {
+          count: percent
+        }
+        $('#example2').progress({
+          percent: percent
+        })
+        if (percent === 100) {
+          this.$route.router.go({path: '/dragmatch'})
+          this.percent.count = 0
+          $('.ui.basic.modal.load').modal('hide')
+          clearInterval(loading)
+        }
+      }, 1000)
     }
   },
   components: {}
