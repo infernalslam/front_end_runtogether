@@ -43,15 +43,19 @@
     <div class="search-box">
       <input placeholder="Search..."><span class="icon glyphicon glyphicon-search"></span>
     </div>
-    <h1 class="page-title"><a class="sidebar-toggle-btn trigger-toggle-sidebar"><span class="line"></span><span class="line"></span><span class="line"></span><span class="line line-angle1"></span><span class="line line-angle2"></span></a>Event : <a><span class="icon glyphicon glyphicon-chevron-down"></span></a></h1>
+    <h1 class="page-title"><a class="sidebar-toggle-btn trigger-toggle-sidebar">
+      <span class="line"></span><span class="line"></span><span class="line"></span>
+      <span class="line line-angle1"></span><span class="line line-angle2"></span>
+    </a>Event : {{eventName[0]}}<a><span class="icon glyphicon glyphicon-chevron-down"></span></a></h1>
   </header>
   <div class="action-bar">
     <ul>
-      <li><a class="icon circle-icon glyphicon glyphicon-chevron-down"></a></li>
+      <h1>ชื่อนามสกุล &nbsp;&nbsp; รายละเอียด &nbsp;&nbsp;&nbsp;&nbsp; Status </h1>
+      <!-- <li><a class="icon circle-icon glyphicon glyphicon-chevron-down"></a></li>
       <li><a class="icon circle-icon glyphicon glyphicon-refresh"></a></li>
-      <li><a class="icon circle-icon glyphicon glyphicon-share-alt"></a></li>
-      <li><a class="icon circle-icon red glyphicon glyphicon-remove"></a></li>
-      <li><a class="icon circle-icon red glyphicon glyphicon-flag"></a></li>
+      <li><a class="icon circle-icon glyphicon glyphicon-share-alt"></a></li> -->
+      <!-- <li><a class="icon circle-icon red glyphicon glyphicon-remove"></a></li> -->
+      <!-- <li><a class="icon circle-icon red glyphicon glyphicon-flag"></a></li> -->
     </ul>
   </div>
   <div id="main-nano-wrapper" class="nano">
@@ -60,25 +64,26 @@
 
 
 
-        <li class="unread">
+        <li class="unread" v-for="show in data">
           <div class="col col-1"><span class="dot"></span>
             <div class="checkbox-wrapper">
               <input type="checkbox" id="chk1">
               <label for="chk1" class="toggle"></label>
             </div>
-            <p class="title">Lucas Kriebel (via Twitter)</p><span class="star-toggle glyphicon glyphicon-star-empty"></span>
+            <p class="title">{{show.mem_name}} &nbsp;&nbsp; {{show.mem_surname}}</p><span class="star-toggle glyphicon glyphicon-star-empty"></span>
           </div>
           <div class="col col-2">
-            <div class="subject">Lucas Kriebel (@LucasKriebel) has sent you a direct message on Twitter! &nbsp;&ndash;&nbsp; <span class="teaser">@LucasKriebel - Very cool :) Nicklas, You have a new direct message.</span></div>
-            <div class="date">11:49 am</div>
+            <div class="subject"> &nbsp;&nbsp;{{show.mem_discription}}
+              <span class="teaser">{{show.mem_type}}</span></div>
+            <div class="date">{{show.mem_type}} / {{show.status_pay}}</div>
           </div>
         </li>
-        
 
 
 
 
-        <li class="green-dot unread">
+
+        <!-- <li class="green-dot unread">
           <div class="col col-1"><span class="dot"></span>
             <div class="checkbox-wrapper">
               <input type="checkbox" id="chk2">
@@ -107,7 +112,7 @@
             <div class="subject">Mochila Beta: Subscription Confirmed &nbsp;&ndash;&nbsp; <span class="teaser">You've been confirmed! Welcome to the ruling class of the inbox. For your records, here is a copy of the information you submitted to us...</span></div>
             <div class="date">Mar 8</div>
           </div>
-        </li>
+        </li> -->
 
 
       </ul>
@@ -118,13 +123,33 @@
 </template>
 
 <script>
+import store from '../vuex/store.js'
+// import {stateAction, getApi, eventID} from '../vuex/actions.js'
+import {getsearchEvent} from '../vuex/getters.js'
 export default {
+  store,
+  vuex: {
+    getters: {
+      showEventID: getsearchEvent
+    }
+  },
   data: function () {
     return {
+      data: [],
+      eventName: []
     }
   },
   computed: {},
-  ready: function () {},
+  ready: function () {
+    this.$http.get('http://192.168.1.39:10000/event/' + this.showEventID).then(function (res) {
+      this.eventName.push(res.data[0].event_name)
+      // this.data = res.data
+    })
+    this.$http.get('http://192.168.1.39:10000/detail_event/' + this.showEventID).then(function (res) {
+      console.log(res.data)
+      this.data = res.data
+    })
+  },
   attached: function () {},
   methods: {},
   components: {}
@@ -459,7 +484,7 @@ a:hover {
 }
 #main .header .search-box input {
   position: absolute;
-  top: 0;
+  top: 43px;
   right: 0;
   bottom: 0;
   width: 100%;

@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(require('vue-moment'))
 var VueResource = require('vue-resource')
-import Index from './components/index'
+import App from './App'
+// import Index from './components/index'
 import Event from './components/event'
 import Show from './components/show'
 import Insert from './components/insert'
@@ -58,4 +59,4 @@ router.map({
     component: Error
   }
 })
-router.start(Index, '#app')
+router.start(App, '#app')

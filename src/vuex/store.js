@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
 // Make vue aware of Vuex
 Vue.use(Vuex)
 
@@ -8,12 +7,14 @@ Vue.use(Vuex)
 // the app starts up
 const state = {
   // TODO: Set up our initial s
-  count: 1
+  count: 1,
+  get: {},
+  eventID: 0
 }
 
-const backend = {
-  get: []
-}
+// const backend = {
+//   get: []
+// }
 
 // Create an object storing various mutations. We will write the mutation
 const mutations = {
@@ -21,19 +22,19 @@ const mutations = {
   statePage (state, page) {
     state.count = page
     console.log(page)
+  },
+  getStatePage (state, data) {
+    state.get = data
+    console.log('show data store :' + state.get)
+  },
+  searchEvent (state, id) {
+    console.log(id)
+    state.eventID = id
   }
 }
-// const mutations = {
-//   getStatePage (backend) {
-//     // backend.get
-//     console.log(backend.get)
-//   }
-// }
 
-// Combine the initial state and the mutations to create a Vuex store.
-// This store can be linked to our app.
 export default new Vuex.Store({
   state,
-  backend,
+  // backend,
   mutations
 })

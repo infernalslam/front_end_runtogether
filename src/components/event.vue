@@ -180,16 +180,25 @@
   </div>
 </div>
 
+
 </template>
 <script>
 /*globals $:false */
 import store from '../vuex/store.js'
-import {stateAction} from '../vuex/actions.js'
+import {stateAction, getApi, eventID} from '../vuex/actions.js'
+import {getBackend, getState, getsearchEvent} from '../vuex/getters.js'
 export default {
   store,
   vuex: {
     actions: {
-      setPage: stateAction
+      setPage: stateAction,
+      getApis: getApi,
+      getEvent: eventID
+    },
+    getters: {
+      getApiEvent: getBackend,
+      getState: getState,
+      showEventID: getsearchEvent
     }
   },
   data: function () {
@@ -200,16 +209,21 @@ export default {
       activePage2: false,
       dataDetail: {},
       dataEdit: {},
-      percent: {}
+      percent: {},
+      eventID: 0
     }
   },
   computed: {},
   ready: function () {
-    this.$http.get('http://192.168.100.113:10000/event').then(function (res) {
-      console.log(res)
+    this.$http.get('http://192.168.1.39:10000/event').then(function (res) {
+      // console.log(res)
       this.data = res.data
     })
     this.setPage(1)
+    this.getApis()
+    console.log(this.getApiEvent)
+    // this.data = this.getApiEvent
+    console.log('show data state :' + this.getState)
   },
   attached: function () {},
   methods: {
@@ -263,10 +277,12 @@ export default {
       console.log(this.data[index])
       this.dataDetail = this.data[index]
       $('.ui.modal.2').modal('show')
-      // this.$route.router.go({path: '/dragmatch'})
     },
     showEvent: function (eventID) {
       console.log(eventID)
+      this.getEvent(eventID)
+      console.log('show eventid vuex' + this.showEventID)
+      this.eventID = eventID
       var percent = 0
       this.percent = {
         count: 0
@@ -283,6 +299,7 @@ export default {
         if (percent === 100) {
           this.$route.router.go({path: '/dragmatch'})
           this.percent.count = 0
+          percent = 0
           $('.ui.basic.modal.load').modal('hide')
           clearInterval(loading)
         }
