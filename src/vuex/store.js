@@ -12,10 +12,6 @@ const state = {
   eventID: 0
 }
 
-// const backend = {
-//   get: []
-// }
-
 // Create an object storing various mutations. We will write the mutation
 const mutations = {
   // TODO: set up our mutations

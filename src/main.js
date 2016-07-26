@@ -19,7 +19,6 @@ import '../node_modules/semantic-ui/dist/semantic.min.css'
 import 'semantic'
 Vue.use(VueRouter)
 Vue.use(VueResource)
-// var App = Vue.extend({})
 var router = new VueRouter()
 router.map({
   '/': {

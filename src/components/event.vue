@@ -215,7 +215,7 @@ export default {
   },
   computed: {},
   ready: function () {
-    this.$http.get('http://192.168.1.39:10000/event').then(function (res) {
+    this.$http.get('http://192.168.100.100:10000/event').then(function (res) {
       // console.log(res)
       this.data = res.data
     })
@@ -228,7 +228,7 @@ export default {
   attached: function () {},
   methods: {
     get: function () {
-      this.$http.get('http://192.168.1.38:10000/event').then(function (res) {
+      this.$http.get('http://192.168.100.100:10000/event').then(function (res) {
         console.log(res)
         this.data = res.data
       })
@@ -242,7 +242,7 @@ export default {
         event_price: '200,300,400'
       }
       console.log(data)
-      this.$http.post('http://192.168.1.38:10000/event', data).then(function (res) {
+      this.$http.post('http://192.168.100.100:10000/event', data).then(function (res) {
         console.log(res)
         this.get()
       })
@@ -253,7 +253,7 @@ export default {
     },
     delEvent: function (id) {
       console.log(id)
-      this.$http.delete('http://192.168.1.38:10000/event/' + id).then(function (res) {
+      this.$http.delete('http://192.168.100.100:10000/event' + id).then(function (res) {
         console.log(res)
         this.get()
       })

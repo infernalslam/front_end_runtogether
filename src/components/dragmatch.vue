@@ -50,12 +50,7 @@
   </header>
   <div class="action-bar">
     <ul>
-      <h1>ชื่อนามสกุล &nbsp;&nbsp; รายละเอียด &nbsp;&nbsp;&nbsp;&nbsp; Status </h1>
-      <!-- <li><a class="icon circle-icon glyphicon glyphicon-chevron-down"></a></li>
-      <li><a class="icon circle-icon glyphicon glyphicon-refresh"></a></li>
-      <li><a class="icon circle-icon glyphicon glyphicon-share-alt"></a></li> -->
-      <!-- <li><a class="icon circle-icon red glyphicon glyphicon-remove"></a></li> -->
-      <!-- <li><a class="icon circle-icon red glyphicon glyphicon-flag"></a></li> -->
+      <h1 class="font-bar">ชื่อนามสกุล &nbsp;&nbsp; รายละเอียด &nbsp;&nbsp;&nbsp;&nbsp; Status </h1>
     </ul>
   </div>
   <div id="main-nano-wrapper" class="nano">
@@ -78,43 +73,6 @@
             <div class="date">{{show.mem_type}} / {{show.status_pay}}</div>
           </div>
         </li>
-
-
-
-
-
-        <!-- <li class="green-dot unread">
-          <div class="col col-1"><span class="dot"></span>
-            <div class="checkbox-wrapper">
-              <input type="checkbox" id="chk2">
-              <label for="chk2" class="toggle"></label>
-            </div>
-            <p class="title">Conceptboard</p>
-            <div class="star-star-toggle glyphicon glyphicon-star-empty"></div>
-          </div>
-          <div class="col col-2">
-            <div class="subject">Please complete your Conceptboard signup &nbsp;&ndash;&nbsp; <span class="teaser">You recently created a Conceptboard account, but you have not yet confirmed your email. Your email is used for notifications about board activity, invites, as well as account related tasks (like password retrieval).</span></div>
-            <div class="date">11:45 am</div>
-          </div>
-        </li>
-
-
-
-        <li class="blue-dot">
-          <div class="col col-1"><span class="dot"></span>
-            <div class="checkbox-wrapper">
-              <input type="checkbox" id="chk4">
-              <label for="chk4" class="toggle"></label>
-            </div>
-            <p class="title">Andrew Zimmer</p><span class="star-toggle glyphicon glyphicon-star-empty"></span>
-          </div>
-          <div class="col col-2">
-            <div class="subject">Mochila Beta: Subscription Confirmed &nbsp;&ndash;&nbsp; <span class="teaser">You've been confirmed! Welcome to the ruling class of the inbox. For your records, here is a copy of the information you submitted to us...</span></div>
-            <div class="date">Mar 8</div>
-          </div>
-        </li> -->
-
-
       </ul>
     </div>
   </div>
@@ -141,11 +99,11 @@ export default {
   },
   computed: {},
   ready: function () {
-    this.$http.get('http://192.168.1.39:10000/event/' + this.showEventID).then(function (res) {
+    this.$http.get('http://192.168.100.100:10000/event/' + this.showEventID).then(function (res) {
       this.eventName.push(res.data[0].event_name)
       // this.data = res.data
     })
-    this.$http.get('http://192.168.1.39:10000/detail_event/' + this.showEventID).then(function (res) {
+    this.$http.get('http://192.168.100.100:10000/detail_event/' + this.showEventID).then(function (res) {
       console.log(res.data)
       this.data = res.data
     })
@@ -974,6 +932,9 @@ a:hover {
   visibility: visible\9;
   /* Target only IE7 and IE8 with this hack */
   opacity: 0.99;
+}
+.font-bar {
+  
 }
 
 </style>
